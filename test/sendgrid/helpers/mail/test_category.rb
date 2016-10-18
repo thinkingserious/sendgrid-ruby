@@ -1,4 +1,4 @@
-require_relative '../../../../lib/sendgrid/helpers/mail/mail'
+require_relative '../../../../lib/sendgrid-ruby.rb'
 require 'minitest/autorun'
 
 class TestCategory < Minitest::Test
@@ -7,10 +7,6 @@ class TestCategory < Minitest::Test
 
   def setup
     @category = Category.new(name: 'foo')
-  end
-
-  def test_aliases
-    assert_equal @category.method(:name), @category.method(:category)
   end
 
   def test_name

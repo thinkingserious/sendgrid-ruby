@@ -17,7 +17,7 @@ class TestMail < Minitest::Test
     mail.add_personalization(personalization)
     mail.add_content(Content.new(type: "text/plain", value: "some text here"))
     mail.add_content(Content.new(type: "text/html", value: "<html><body>some text here</body></html>"))
-    assert_equal(mail.to_json, JSON.parse('{"content":[{"type":"text/plain","value":"some text here"},{"type":"text/html","value":"<html><body>some text here</body></html>"}],"from":{"email":"test@example.com"},"personalizations":[{"to":[{"email":"test@example.com"}]}],"subject":"Hello World from the SendGrid Ruby Library", "attachments": [], "categories": []}'))
+    assert_equal(mail.to_json, JSON.parse('{"content":[{"type":"text/plain","value":"some text here"},{"type":"text/html","value":"<html><body>some text here</body></html>"}],"from":{"email":"test@example.com"},"personalizations":[{"to":[{"email":"test@example.com"}]}],"subject":"Hello World from the SendGrid Ruby Library"}'))
   end
 
   def test_kitchen_sink
@@ -80,17 +80,17 @@ class TestMail < Minitest::Test
 
     mail.template_id = "13b8f94f-bcae-4ec6-b752-70d6cb59f932"
 
-    mail.sections = Section.new(key: "%section1%", value: "Substitution Text for Section 1")
-    mail.sections = Section.new(key: "%section2%", value: "Substitution Text for Section 2")
+    mail.add_section(Section.new(key: "%section1%", value: "Substitution Text for Section 1"))
+    mail.add_section(Section.new(key: "%section2%", value: "Substitution Text for Section 2"))
 
-    mail.headers = Header.new(key: "X-Test3", value: "test3")
-    mail.headers = Header.new(key: "X-Test4", value: "test4")
+    mail.add_header(Header.new(key: "X-Test3", value: "test3"))
+    mail.add_header(Header.new(key: "X-Test4", value: "test4"))
 
     mail.add_category(Category.new(name: "May"))
     mail.add_category(Category.new(name: "2016"))
 
-    mail.custom_args = CustomArg.new(key: "campaign", value: "welcome")
-    mail.custom_args = CustomArg.new(key: "weekday", value: "morning")
+    mail.add_custom_arg(CustomArg.new(key: "campaign", value: "welcome"))
+    mail.add_custom_arg(CustomArg.new(key: "weekday", value: "morning"))
 
     mail.send_at = 1443636842
 
